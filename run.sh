@@ -1,14 +1,16 @@
 #!/bin/bash
 
+echo "Installing a package."
 echo -ne '#                         (5%)\r'
-
-apt-get install squid -y
-systemctl start squid
-systemctl enable squid
-apt-get install apache2-utils -y
-touch /etc/squid/passwd
-chown proxy /etc/squid/passwd
-htpasswd -b -c /etc/squid/passwd $2 $3
+{
+    apt-get install squid -y
+    systemctl start squid
+    systemctl enable squid
+    apt-get install apache2-utils -y
+    touch /etc/squid/passwd
+    chown proxy /etc/squid/passwd
+    htpasswd -b -c /etc/squid/passwd $2 $3
+} &> /dev/null
 
 echo -ne '#####                     (33%)\r'
 
@@ -56,7 +58,7 @@ echo -ne '#####################     (70%)\r'
     cat temp > $CONFIG_FILE
     rm -f temp
 
-    PORT="2564"
+    PORT=$2
     sed -i 's/http_port 3128/http_port '`echo $PORT`'/g' $CONFIG_FILE
 } &> /dev/null
 
@@ -66,4 +68,4 @@ systemctl restart squid
 ufw allow $PORT
 echo -ne '##########################(100%)\r'
 
-echo "Success! Proxy IP: $1:$PORT , Username=${2} | Password=${3}"
+echo "Success! Proxy IP: $1:$PORT , Username=$3 | Password=$4"

@@ -2,13 +2,13 @@
 
 echo -ne '#                         (5%)\r'
 
-sudo apt -y install squid
-sudo systemctl start squid
-sudo systemctl enable squid
-sudo apt -y install apache2-utils
-sudo touch /etc/squid/passwd
-sudo sudo chown proxy /etc/squid/passwd
-sudo htpasswd -b -c /etc/squid/passwd $2 $3
+apt-get install squid -y
+systemctl start squid
+systemctl enable squid
+apt-get install apache2-utils -y
+touch /etc/squid/passwd
+chown proxy /etc/squid/passwd
+htpasswd -b -c /etc/squid/passwd $2 $3
 
 echo -ne '#####                     (33%)\r'
 
@@ -62,8 +62,8 @@ echo -ne '#####################     (70%)\r'
 
 echo -ne '#######################   (90%)\r'
 
-sudo systemctl restart squid
-sudo ufw allow $PORT
+systemctl restart squid
+ufw allow $PORT
 echo -ne '##########################(100%)\r'
 
 echo "Success! Proxy IP: $1:$PORT , Username=${2} | Password=${3}"

@@ -68,4 +68,5 @@ systemctl restart squid
 ufw allow $PORT
 echo -ne '##########################(100%)\r'
 
-echo "Success! Proxy IP: $1:$PORT , Username=$3 | Password=$4"
+echo "Success! Proxy IP: $1:$PORT -> Username=$3 | Password=$4"
+echo 'Can test: curl -x "http://'$3':'$4'@'$1':'$PORT'" -I http://google.com'

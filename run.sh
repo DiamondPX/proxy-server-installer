@@ -48,7 +48,6 @@ echo -ne '###################       (66%)\r'
 
 {
     sed -i 's/http_access allow localhost/#http_access allow localhost/g' $CONFIG_FILE
-    sed '/acl localnet src 128\.199\.113\.87 /a #should be allowed' $CONFIG_FILE
 } &> /dev/null
 
 echo -ne '#####################     (70%)\r'

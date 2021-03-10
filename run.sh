@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "Installing a package."
-echo -ne '#                         (5%)\r'
+echo -ne '                          (0%)\r'
 {
     apt-get install squid -y
     systemctl start squid
@@ -9,7 +9,7 @@ echo -ne '#                         (5%)\r'
     apt-get install apache2-utils -y
     touch /etc/squid/passwd
     chown proxy /etc/squid/passwd
-    htpasswd -b -c /etc/squid/passwd $2 $3
+    htpasswd -b -c /etc/squid/passwd $3 $4
 } &> /dev/null
 
 echo -ne '#####                     (33%)\r'
@@ -64,8 +64,11 @@ echo -ne '#####################     (70%)\r'
 
 echo -ne '#######################   (90%)\r'
 
+{
 systemctl restart squid
 ufw allow $PORT
+} &> /dev/null
+
 echo -ne '##########################(100%)\r'
 
 echo "Success! Proxy IP: $1:$PORT -> Username=$3 | Password=$4"
